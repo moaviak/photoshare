@@ -17,50 +17,27 @@ pipeline {
   }
 
   stages {
-
     stage('Install Backend Dependencies') {
       steps {
-        sh 'npm install'
+        bat 'npm install'
       }
     }
 
     stage('Install Frontend Dependencies') {
       steps {
-        dir("${FRONTEND_DIR}") {
-          sh 'npm install'
-        }
+        bat 'cd %FRONTEND_DIR% && npm install'
       }
     }
 
     stage('Build Frontend') {
       steps {
-        dir("${FRONTEND_DIR}") {
-          sh 'npm run build'
-        }
-      }
-    }
-
-    stage('Copy Frontend Build to Backend (Optional)') {
-      steps {
-        // If you plan to serve frontend using Express static middleware
-        sh 'cp -r frontend/build ./build'
-      }
-    }
-
-    stage('Run Tests (Optional)') {
-      steps {
-        sh 'npm test || true' // Optional if you have tests
+        bat 'cd %FRONTEND_DIR% && npm run build'
       }
     }
 
     stage('Deploy') {
       steps {
-        // Replace this with your actual deployment steps
-        sh '''
-          echo "Deploying application..."
-          # Example: scp or rsync files to server
-          # scp -r . user@your-server:/path/to/deploy/
-        '''
+        bat 'npm start'
       }
     }
   }
