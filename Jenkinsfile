@@ -19,26 +19,26 @@ pipeline {
   stages {
     stage('Install Backend Dependencies') {
       steps {
-        bat 'npm ci'
+        sh 'npm ci'
       }
     }
 
     stage('Install Frontend Dependencies') {
       steps {
-        bat 'cd %FRONTEND_DIR% && npm ci --include=dev'
+        sh 'cd $FRONTEND_DIR && npm ci --include=dev'
       }
     }
 
     stage('Build Frontend') {
       steps {
-        bat 'cd %FRONTEND_DIR% && npm run build'
+        sh 'cd $FRONTEND_DIR && npm run build'
       }
     }
 
     stage('Deploy') {
       steps {
-        bat 'start "" cmd /c "npm start > server.log 2>&1"'
-        bat 'type server.log'
+        sh 'nohup npm start > server.log 2>&1 &'
+        sh 'tail -n 20 server.log'
       }
     }
   }
