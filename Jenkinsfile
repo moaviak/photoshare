@@ -19,13 +19,13 @@ pipeline {
   stages {
     stage('Install Backend Dependencies') {
       steps {
-        bat 'npm install'
+        bat 'npm ci'
       }
     }
 
     stage('Install Frontend Dependencies') {
       steps {
-        bat 'cd %FRONTEND_DIR% && npm install'
+        bat 'cd %FRONTEND_DIR% && npm ci --include=dev'
       }
     }
 
