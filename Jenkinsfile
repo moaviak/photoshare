@@ -13,7 +13,7 @@ pipeline {
   }
 
   tools {
-    nodejs 'Node 18' // Make sure Node 18 is configured in Jenkins tools
+    nodejs 'Node 20'
   }
 
   stages {
@@ -37,7 +37,8 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        bat 'npm start'
+        bat 'start "" cmd /c "npm start > server.log 2>&1"'
+        bat 'type server.log'
       }
     }
   }
