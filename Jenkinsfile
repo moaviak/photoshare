@@ -25,13 +25,19 @@ pipeline {
 
     stage('Install Frontend Dependencies') {
       steps {
-        sh 'cd $FRONTEND_DIR && npm ci --include=dev'
+        sh '''
+        cd ${FRONTEND_DIR}
+        npm ci --include=dev
+        '''
       }
     }
 
     stage('Build Frontend') {
       steps {
-        sh 'cd $FRONTEND_DIR && npm run build'
+        sh '''
+        cd ${FRONTEND_DIR}
+        npm run build
+        '''
       }
     }
 
